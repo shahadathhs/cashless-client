@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PrivateRoute from "./routes/PrivateRoute";
 import { AuthProvider } from "./provider/AuthProvider";
+import DashboardLayout from "./layout/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -33,17 +34,22 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
-      },
-      {
-        path: "/dashboard",
-        element: (
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        ),
-      },
+      }
     ],
   },
+  {
+    path: "/dashboard",
+    element: <PrivateRoute><DashboardLayout /> </PrivateRoute>,
+    errorElement: <ErrorPage />,
+    children: [
+      // for all
+      {
+        path: "/dashboard",
+        element: <PrivateRoute><Dashboard /> </PrivateRoute>,
+      },
+
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
