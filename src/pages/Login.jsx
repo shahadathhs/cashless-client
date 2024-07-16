@@ -1,21 +1,18 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useAuth } from '../provider/AuthProvider';
 
 export default function Login() {
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState('');
   const [pin, setPin] = useState('');
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { identifier, pin });
-      const { token } = response.data;
-      
-      localStorage.setItem('token', token);
-
+      await login(identifier, pin);
       Swal.fire({
         title: 'Success!',
         text: 'You are logged in!',
