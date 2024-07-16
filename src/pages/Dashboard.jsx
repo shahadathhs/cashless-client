@@ -6,7 +6,7 @@ export default function Dashboard() {
       <Helmet>
         <title>Dashboard | Cashless</title>
       </Helmet>
-      <div className="text-center">
+      <div className="pt-16 text-center">
       <h2>Dashboard</h2>
       <p>Welcome to your dashboard!</p>
       </div>

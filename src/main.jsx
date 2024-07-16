@@ -11,6 +11,8 @@ import { Toaster } from "react-hot-toast";
 import Layout from "./layout/Layout";
 import ErrorPage from './pages/ErrorPage';
 import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -22,14 +24,14 @@ const router = createBrowserRouter([
         path: "/",
         element: <Navigate to="/dashboard" replace />,
       },
-      // {
-      //   path: "/login",
-      //   element: <Login />,
-      // },
-      // {
-      //   path: "/register",
-      //   element: <Register />,
-      // },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
       {
         path: "/dashboard",
         element: <Dashboard />,
