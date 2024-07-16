@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.min-h-screen-cal {
+  min-height: calc(100vh - 55px);
+}
