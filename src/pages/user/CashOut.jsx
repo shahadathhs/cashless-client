@@ -1,33 +1,22 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from './../../provider/AuthProvider';
+import { useAuth } from "./../../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 export default function CashOut() {
   const [amount, setAmount] = useState("");
   const [pin, setPin] = useState("");
-  const { user, token } = useAuth();
-  const navigate = useNavigate();
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [agentPhone, setAgentPhone] = useState("");
+  const { user } = useAuth();
+  const token = localStorage.getItem("token");
 
   const handleCashOut = async (e) => {
     e.preventDefault();
 
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
-    if (amount < 50) {
-      setError("Minimum cash-out amount is 50 Taka.");
-      return;
-    }
-
     try {
-      const response = await axios.post(
+      await axios.post(
         `${import.meta.env.VITE_API_URL}/cashout`,
-        { amount, pin, agentId: user.agentId },
+        { amount, pin, phone: user.phone, agentPhone },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -35,52 +24,58 @@ export default function CashOut() {
         }
       );
 
-      setSuccess("Cash-out successful.");
-      setError("");
+      // Success Notification
+      Swal.fire({
+        icon: "success",
+        title: "Cash-out Request Successful",
+        text: "Cash-out request has been send successfully.",
+      });
+
       setAmount("");
       setPin("");
+      setAgentPhone("")
     } catch (error) {
       console.error("Error during cash-out:", error);
-      setError("Cash-out failed. Please check your PIN and try again.");
+      Swal.fire({
+        icon: "error",
+        title: "Cash-out Request Failed",
+        text: "Cash-out request failed. Please check your PIN and try again.",
+      });
     }
   };
 
   return (
     <div className="p-4 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Cash Out</h1>
-      {error && <div className="text-red-500 mb-4">{error}</div>}
-      {success && <div className="text-green-500 mb-4">{success}</div>}
-      <form onSubmit={handleCashOut}>
-        <div className="mb-4">
-          <label className="block mb-2" htmlFor="amount">
-            Amount (in Taka)
-          </label>
-          <input
-            type="number"
-            id="amount"
-            className="w-full p-2 border border-gray-300 rounded"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-2" htmlFor="pin">
-            PIN
-          </label>
-          <input
-            type="password"
-            id="pin"
-            className="w-full p-2 border border-gray-300 rounded"
-            value={pin}
-            onChange={(e) => setPin(e.target.value)}
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
-        >
+      <form
+        onSubmit={handleCashOut}
+        className="card-body max-w-sm border-2 rounded-md shadow-md"
+      >
+        <h1 className="text-3xl font-bold mb-4">Cash Out</h1>
+        <input
+          type="number"
+          placeholder="Amount"
+          className="input input-bordered"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          required
+        />
+        <input
+          type="number"
+          placeholder="Agent's Phone"
+          className="input input-bordered"
+          value={agentPhone}
+          onChange={(e) => setAgentPhone(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="PIN"
+          className="input input-bordered"
+          value={pin}
+          onChange={(e) => setPin(e.target.value)}
+          required
+        />
+        <button type="submit" className="btn btn-primary">
           Cash Out
         </button>
       </form>

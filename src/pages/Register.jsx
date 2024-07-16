@@ -55,7 +55,7 @@ export default function Register() {
         <h2 className="text-center text-2xl font-bold">Create New Account</h2>
         <input
           required
-          className="input input-bordered w-full"
+          className="input input-bordered w-full" 
           type="text"
           placeholder="Name"
           value={name}

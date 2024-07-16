@@ -8,6 +8,7 @@ export default function UserManagement() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const token = localStorage.getItem("token");
+  
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -48,20 +49,22 @@ export default function UserManagement() {
     }
   }, [search, users]);
 
-  const handleActivateUser = async (userId) => {
+  const handleActivateUser = async (userId, role) => {
+    const bonus = role === "agent" ? 10000 : 40;
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/users/${userId}`,
-        { status: "active" },
+        { status: "active", balance: bonus },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+  
       setUsers(
         users.map((user) =>
-          user._id === userId ? { ...user, status: "active" } : user
+          user._id === userId ? { ...user, status: "active", balance: bonus } : user
         )
       );
     } catch (error) {
@@ -69,6 +72,7 @@ export default function UserManagement() {
       setError("Failed to activate user.");
     }
   };
+  
 
   const handleBlockUser = async (userId) => {
     try {
@@ -102,7 +106,7 @@ export default function UserManagement() {
           placeholder="Search by name"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="input input-bordered max-w-sm"
         />
       </div>
       {loading ? (
@@ -144,24 +148,22 @@ export default function UserManagement() {
                     {user.status}
                   </td>
                   <td>
-                    {user.status === "pending" ||
-                      ("blocked" && (
+                    {user.status === "pending"  && (
                         <button
                           onClick={() => handleActivateUser(user._id)}
                           className="btn btn-sm btn-outline text-green-700"
                         >
                           Activate
                         </button>
-                      ))}
-                    {user.status === "active" ||
-                      ("pending" && (
+                      )}
+                    {user.status === "active"  && (
                         <button
                           onClick={() => handleBlockUser(user._id)}
                           className="btn btn-sm btn-outline text-red-700"
                         >
                           Block
                         </button>
-                      ))}
+                      )}
                   </td>
                 </tr>
               ))}
