@@ -13,6 +13,7 @@ import ErrorPage from './pages/ErrorPage';
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PrivateRoute from "./routes/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -34,12 +35,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Dashboard />,
-        // element: (
-        //   <PrivateRoute>
-        //     <Dashboard />
-        //   </PrivateRoute>
-        // ),
+        // element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
     ],
   },

@@ -23,7 +23,7 @@ export default function Register() {
     }
     const user = { name, pin, phone, email };
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/users`, user);
+      await axios.post(`${import.meta.env.VITE_API_URL}/register`, user);
       Swal.fire({
         title: 'Success!',
         text: 'Your registration is successful!',
