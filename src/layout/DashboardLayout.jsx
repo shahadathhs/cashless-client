@@ -1,10 +1,11 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 
 const DashboardLayout = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
+  let role = user.role;
 
   const handleLogout = () => {
     logout();
@@ -45,6 +46,80 @@ const DashboardLayout = () => {
           </button>
           <div className="divider divider-neutral">OR</div>
           {/* dashboard */}
+          {/* for admin */}
+          <li>
+            <Link to="/dashboard" className="btn btn-outline">
+              Dashboard
+            </Link>
+          </li>
+          {role === "admin" && (
+            <>
+              <li>
+                <Link
+                  to="/dashboard/all-transactions"
+                  className="btn btn-outline"
+                >
+                  All Transactions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/dashboard/user-management"
+                  className="btn btn-outline"
+                >
+                  User Management
+                </Link>
+              </li>
+            </>
+          )}
+          {role === "agent" && (
+            <>
+              <li>
+                <Link
+                  to="/dashboard/agent-transactions"
+                  className="btn btn-outline"
+                >
+                  Agent Transactions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/dashboard/transactions-management"
+                  className="btn btn-outline"
+                >
+                  Transactions Management
+                </Link>
+              </li>
+            </>
+          )}
+          {role === "user" && (
+            <>
+              <li>
+                <Link
+                  to="/dashboard/cash-out"
+                  className="btn btn-outline"
+                >
+                  Cash Out
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/dashboard/send-money"
+                  className="btn btn-outline"
+                >
+                  Send Money
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/dashboard/user-transactions"
+                  className="btn btn-outline"
+                >
+                  User Transactions
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>

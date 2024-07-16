@@ -16,6 +16,13 @@ import Register from "./pages/Register";
 import PrivateRoute from "./routes/PrivateRoute";
 import { AuthProvider } from "./provider/AuthProvider";
 import DashboardLayout from "./layout/DashboardLayout";
+import AllTransactions from './pages/admin/AllTransactions';
+import UserManagement from './pages/admin/UserManagement';
+import AgentTransactions from './pages/agent/AgentTransactions';
+import TransactionsManagement from './pages/agent/TransactionsManagement';
+import CashOut from './pages/user/CashOut';
+import SendMoney from './pages/user/SendMoney';
+import UserTransactions from './pages/user/UserTransactions';
 
 const router = createBrowserRouter([
   {
@@ -47,7 +54,37 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <PrivateRoute><Dashboard /> </PrivateRoute>,
       },
-
+      // for admin
+      {
+        path: "/dashboard/all-transactions",
+        element: <PrivateRoute><AllTransactions /> </PrivateRoute>,
+      },
+      {
+        path: "/dashboard/user-management",
+        element: <PrivateRoute><UserManagement /> </PrivateRoute>,
+      },
+      // for agent
+      {
+        path: "/dashboard/agent-transactions",
+        element: <PrivateRoute><AgentTransactions /> </PrivateRoute>,
+      },
+      {
+        path: "/dashboard/transactions-management",
+        element: <PrivateRoute><TransactionsManagement /> </PrivateRoute>,
+      },
+      // for user
+      {
+        path: "/dashboard/cash-out",
+        element: <PrivateRoute><CashOut /> </PrivateRoute>,
+      },
+      {
+        path: "/dashboard/send-money",
+        element: <PrivateRoute><SendMoney /> </PrivateRoute>,
+      },
+      {
+        path: "/dashboard/user-transactions",
+        element: <PrivateRoute><UserTransactions /> </PrivateRoute>,
+      },
     ]
   }
 ]);
