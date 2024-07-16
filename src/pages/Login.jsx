@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -9,13 +8,6 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log({ identifier, pin })
-    // try {
-    //   const res = await axios.post('/api/auth/login', { identifier, pin });
-    //   localStorage.setItem('token', res.data);
-    //   history.push('/dashboard');
-    // } catch (err) {
-    //   console.error(err);
-    // }
   };
 
   return (
