@@ -13,10 +13,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      setToken({ token });
+    const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+    if (storedToken) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
     }
   }, []);
 
@@ -31,6 +33,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(user));
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setToken(token);
+      setUser(user);
 
       return response.data;
     } catch (error) {
