@@ -13,7 +13,6 @@ import ErrorPage from "./pages/ErrorPage";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import PrivateRoute from "./routes/PrivateRoute";
 import { AuthProvider } from "./provider/AuthProvider";
 import DashboardLayout from "./layout/DashboardLayout";
 import AllTransactions from './pages/admin/AllTransactions';
@@ -24,6 +23,7 @@ import CashOut from './pages/user/CashOut';
 import SendMoney from './pages/user/SendMoney';
 import UserTransactions from './pages/user/UserTransactions';
 import CashIn from "./pages/user/CashIn";
+import PrivateRoute from "./routes/PrivateRoute";
 
 const router = createBrowserRouter([
   {

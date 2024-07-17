@@ -13,7 +13,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validate that the PIN is exactly 5 digits
+    
     if (!/^\d{5}$/.test(pin)) {
       Swal.fire({
         title: "Error!",

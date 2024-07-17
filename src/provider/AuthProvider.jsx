@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const useAuth = () => {
   return useContext(AuthContext);
@@ -11,6 +11,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -23,6 +24,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (identifier, pin) => {
+    setLoading(true); 
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/login`,
@@ -34,9 +36,10 @@ export const AuthProvider = ({ children }) => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setToken(token);
       setUser(user);
-
+      setLoading(false); 
       return response.data;
     } catch (error) {
+      setLoading(false); 
       console.error("Error during login:", error);
       throw error;
     }
@@ -51,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
