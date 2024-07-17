@@ -21,9 +21,9 @@ export default function TransactionsManagement() {
           }
         );
         const allData = response.data;
-        // Filter using agentPhone and set filter data
+        // Filter using agentPhone and filter data with pending status
         const filteredData = allData.filter(
-          (request) => request.agentPhone === agentPhone
+          (request) => request.agentPhone === agentPhone && request.status === "pending"
         );
         setCashInRequests(filteredData);
       } catch (error) {
@@ -42,9 +42,9 @@ export default function TransactionsManagement() {
           }
         );
         const allData = response.data;
-        // Filter using agentPhone and set filter data
+        // Filter using agentPhone and filter data with pending status
         const filteredData = allData.filter(
-          (request) => request.agentPhone === agentPhone
+          (request) => request.agentPhone === agentPhone && request.status === "pending"
         );
         setCashOutRequests(filteredData);
       } catch (error) {
@@ -112,13 +112,8 @@ export default function TransactionsManagement() {
                 <td>{request.status}</td>
                 <td>{new Date(request.createdAt).toLocaleString()}</td>
                 <td>
-                  {
-                    (request.status === "pending" ? 
-                      <button className="btn btn-success"
-                      onClick={() => handleCashInApprove(request._id)}>Approve</button>
-                      : null
-                    )
-                  }
+                  <button className="btn btn-success"
+                    onClick={() => handleCashInApprove(request._id)}>Approve</button>
                 </td>
               </tr>
             ))}
@@ -145,13 +140,8 @@ export default function TransactionsManagement() {
                 <td>{request.status}</td>
                 <td>{new Date(request.createdAt).toLocaleString()}</td>
                 <td>
-                  {
-                    (request.status === "pending" ? 
-                      <button className="btn btn-success"
-                      onClick={() => handleCashOutApprove(request._id)}>Approve</button>
-                      : null
-                    )
-                  }
+                  <button className="btn btn-success"
+                    onClick={() => handleCashOutApprove(request._id)}>Approve</button>
                 </td>
               </tr>
             ))}

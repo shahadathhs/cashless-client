@@ -80,7 +80,7 @@ const DashboardLayout = () => {
                   to="/dashboard/agent-transactions"
                   className="btn btn-outline"
                 >
-                  Agent Transactions
+                  My Transactions
                 </Link>
               </li>
               <li>
@@ -88,7 +88,7 @@ const DashboardLayout = () => {
                   to="/dashboard/transactions-management"
                   className="btn btn-outline"
                 >
-                  Transactions Management
+                  Pending Transactions
                 </Link>
               </li>
             </>
