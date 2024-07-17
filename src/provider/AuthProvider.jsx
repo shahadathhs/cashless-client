@@ -11,7 +11,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (identifier, pin) => {
-    setLoading(true); 
+    // setLoading(true); 
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/login`,
@@ -36,10 +36,10 @@ export const AuthProvider = ({ children }) => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setToken(token);
       setUser(user);
-      setLoading(false); 
+      // setLoading(false); 
       return response.data;
     } catch (error) {
-      setLoading(false); 
+      // setLoading(false); 
       console.error("Error during login:", error);
       throw error;
     }
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
