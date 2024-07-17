@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Helmet } from "react-helmet-async";
 import { useAuth } from './../../provider/AuthProvider';
 
 export default function UserTransactions() {
@@ -31,9 +30,6 @@ export default function UserTransactions() {
 
   return (
     <div>
-      <Helmet>
-        <title>Transactions Management | Cashless</title>
-      </Helmet>
       <div className="p-4 space-y-4">
         <h1 className="text-2xl text-center font-bold">Transactions History</h1>
         <div className="flex justify-center">
