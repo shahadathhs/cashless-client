@@ -56,6 +56,41 @@ export default function TransactionsManagement() {
     fetchCashOutRequests();
   }, [token, agentPhone]);
 
+  const handleCashInApprove = async (requestId) => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/cashin/approve/${requestId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCashInRequests(prevRequests =>
+        prevRequests.map(request =>
+          request._id === requestId ? { ...request, status: "approved" } : request
+        )
+      );
+    } catch (error) {
+      console.error("Error approving cash-in request:", error);
+    }
+  };
+  
+  const handleCashOutApprove = async (requestId) => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/cashout/approve/${requestId}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setCashOutRequests(prevRequests =>
+        prevRequests.map(request =>
+          request._id === requestId ? { ...request, status: "approved" } : request
+        )
+      );
+    } catch (error) {
+      console.error("Error approving cash-out request:", error);
+    }
+  };
+  
+
   return (
     <div className="space-y-4">
       <div className="overflow-x-auto my-4">
@@ -79,7 +114,8 @@ export default function TransactionsManagement() {
                 <td>
                   {
                     (request.status === "pending" ? 
-                      <button className="btn btn-success">Approve</button>
+                      <button className="btn btn-success"
+                      onClick={() => handleCashInApprove(request._id)}>Approve</button>
                       : null
                     )
                   }
@@ -111,7 +147,8 @@ export default function TransactionsManagement() {
                 <td>
                   {
                     (request.status === "pending" ? 
-                      <button className="btn btn-success">Approve</button>
+                      <button className="btn btn-success"
+                      onClick={() => handleCashOutApprove(request._id)}>Approve</button>
                       : null
                     )
                   }
