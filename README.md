@@ -2,25 +2,13 @@
 
 This repository contains the code for a basic Mobile Financial Service (MFS) application developed using React.js, Node.js, Express.js, and MongoDB.
 
-## Features
+### Live URL: <https://cashless-sandy.vercel.app>
+### Server side code repository: <https://github.com/shahadathhs/cashless-server>
 
-- **User Registration and Authentication:**
-  - Users can register with Name, 5-digit PIN, Mobile Number, and Email. Registration requires admin approval.
-  - JWT authentication is used for secure login.
-
-- **Transaction Features:**
-  - **Send Money:** Users can send money to other users. PIN verification and JWT are required.
-  - **Cash-Out:** Users can cash out through agents, with a fee deducted from the transaction.
-  - **Cash-In:** Users can cash in through agents without a fee.
-
-- **Bonus and Fees:**
-  - New users receive a one-time bonus of 40 Taka upon admin approval.
-  - Fees are applied for transactions over 100 Taka and cash-out transactions.
-
-- **Role-Based Access:**
-  - **User:** Can perform transactions, check balance, and view transaction history.
-  - **Agent:** Manages transactions, approves cash-in/cash-out requests, and checks balance.
-  - **Admin:** Manages user accounts, activates/blocks accounts, and monitors system transactions.
+## Admin Credentials
+- Email: admin@gmail.com
+- Phone: 123456789
+- PIN: 12345
 
 ## Installation
 
@@ -55,7 +43,26 @@ To run this project locally, follow these steps:
 
    This command starts the development server. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Server side code repository: <https://github.com/shahadathhs/cashless-server>
+
+## Features
+
+- **User Registration and Authentication:**
+  - Users can register with Name, 5-digit PIN, Mobile Number, and Email. Registration requires admin approval.
+  - JWT authentication is used for secure login.
+
+- **Transaction Features:**
+  - **Send Money:** Users can send money to other users. PIN verification and JWT are required.
+  - **Cash-Out:** Users can cash out through agents, with a fee deducted from the transaction.
+  - **Cash-In:** Users can cash in through agents without a fee.
+
+- **Bonus and Fees:**
+  - New users receive a one-time bonus of 40 Taka upon admin approval.
+  - Fees are applied for transactions over 100 Taka and cash-out transactions.
+
+- **Role-Based Access:**
+  - **User:** Can perform transactions, check balance, and view transaction history.
+  - **Agent:** Manages transactions, approves cash-in/cash-out requests, and checks balance.
+  - **Admin:** Manages user accounts, activates/blocks accounts, and monitors system transactions.
 
 ## Usage
 
