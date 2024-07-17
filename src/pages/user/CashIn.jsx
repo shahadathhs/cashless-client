@@ -14,6 +14,15 @@ export default function CashIn() {
   const handleCashIn = async (e) => {
     e.preventDefault();
 
+    if (user.status !== "active") {
+      Swal.fire({
+        icon: "error",
+        title: "Cash-in Failed",
+        text: "Your Account is not Active.",
+      });
+      return;
+    }
+
     if (amount < 50) {
       Swal.fire({
         icon: "error",

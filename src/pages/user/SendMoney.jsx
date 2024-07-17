@@ -13,6 +13,15 @@ export default function SendMoney() {
   const handleSendMoney = async (e) => {
     e.preventDefault();
 
+    if (user.status !== "active") {
+      Swal.fire({
+        icon: "error",
+        title: "Transaction Failed",
+        text: "Your Account is not Active.",
+      });
+      return;
+    }
+
     if (amount < 50) {
       Swal.fire({
         icon: "error",
@@ -23,9 +32,11 @@ export default function SendMoney() {
     }
 
     try {
+      console.log(import.meta.env.VITE_API_URL); // Log the API URL
+
       await axios.post(
         `${import.meta.env.VITE_API_URL}/sendmoney`,
-        { amount, pin, senderPhone: user.phone, receiverPhone },
+        { amount, pin, recipientPhone: receiverPhone },
         {
           headers: {
             Authorization: `Bearer ${token}`,

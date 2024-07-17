@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "./../../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 export default function TransactionsManagement() {
   const { user } = useAuth();
@@ -67,23 +68,47 @@ export default function TransactionsManagement() {
 
   const handleCashInApprove = async (requestId) => {
     try {
+      if (user.status !== "active") {
+        Swal.fire({
+          icon: "error",
+          title: "Cash-in Approve Failed",
+          text: "Your Account is not Active.",
+        });
+        return;
+      }
+  
       await axios.post(
         `${import.meta.env.VITE_API_URL}/cashin/approve/${requestId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setCashInRequests(prevRequests =>
-        prevRequests.map(request =>
+  
+      setCashInRequests((prevRequests) =>
+        prevRequests.map((request) =>
           request._id === requestId ? { ...request, status: "approved" } : request
         )
       );
     } catch (error) {
       console.error("Error approving cash-in request:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Cash-in Approve Failed",
+        text: error.response?.data?.error || "Internal server error",
+      });
     }
   };
   
+  
   const handleCashOutApprove = async (requestId) => {
     try {
+      if (user.status !== "active") {
+        Swal.fire({
+          icon: "error",
+          title: "Cash-out Approve Failed",
+          text: "Your Account is not Active.",
+        });
+        return;
+      }
       await axios.post(
         `${import.meta.env.VITE_API_URL}/cashout/approve/${requestId}`,
         {},
@@ -133,8 +158,11 @@ export default function TransactionsManagement() {
                     <td>{request.status}</td>
                     <td>{new Date(request.createdAt).toLocaleString()}</td>
                     <td>
-                      <button className="btn btn-success"
+                      {
+                        request.status === 'pending' && <button className="btn btn-success"
                         onClick={() => handleCashInApprove(request._id)}>Approve</button>
+                      }
+                      
                     </td>
                   </tr>
                 ))}
@@ -161,8 +189,11 @@ export default function TransactionsManagement() {
                     <td>{request.status}</td>
                     <td>{new Date(request.createdAt).toLocaleString()}</td>
                     <td>
-                      <button className="btn btn-success"
+                      {
+                        request.status === 'pending' && <button className="btn btn-success"
                         onClick={() => handleCashOutApprove(request._id)}>Approve</button>
+                      }
+                      
                     </td>
                   </tr>
                 ))}
