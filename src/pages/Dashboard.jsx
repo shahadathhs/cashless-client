@@ -1,9 +1,29 @@
+import { useState } from "react";
+import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import { useAuth } from "../provider/AuthProvider";
 
 export default function Dashboard() {
   const { user } = useAuth();
-  console.log(user);
+  const [balance, setBalance] = useState(null);
+  const token = localStorage.getItem("token");
+
+  const fetchBalance = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/balance/${user._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setBalance(response.data.balance);
+    } catch (error) {
+      console.error("Error fetching balance:", error);
+      alert("Failed to fetch balance. Please try again later.");
+    }
+  };
 
   return (
     <div>
@@ -21,7 +41,15 @@ export default function Dashboard() {
               <p>Email: {user?.email}</p>
               <p>Role: {user?.role}</p>
               <p>Phone: {user?.phone}</p>
-              <p>Balance: {user?.balance}</p>
+              <button
+                className="btn btn-primary mt-4"
+                onClick={fetchBalance}
+              >
+                Check Balance
+              </button>
+              {balance !== null && (
+                <p className="mt-2">Balance: {balance} Taka</p>
+              )}
             </div>
           </div>
         </div>
