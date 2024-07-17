@@ -23,6 +23,7 @@ import TransactionsManagement from './pages/agent/TransactionsManagement';
 import CashOut from './pages/user/CashOut';
 import SendMoney from './pages/user/SendMoney';
 import UserTransactions from './pages/user/UserTransactions';
+import CashIn from "./pages/user/CashIn";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/cash-out",
         element: <PrivateRoute><CashOut /> </PrivateRoute>,
+      },
+      {
+        path: "/dashboard/cash-in",
+        element: <PrivateRoute><CashIn /> </PrivateRoute>,
       },
       {
         path: "/dashboard/send-money",

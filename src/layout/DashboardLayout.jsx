@@ -46,12 +46,12 @@ const DashboardLayout = () => {
           </button>
           <div className="divider divider-neutral">OR</div>
           {/* dashboard */}
-          {/* for admin */}
           <li>
             <Link to="/dashboard" className="btn btn-outline">
               Dashboard
             </Link>
           </li>
+          {/* for admin */}
           {role === "admin" && (
             <>
               <li>
@@ -72,6 +72,7 @@ const DashboardLayout = () => {
               </li>
             </>
           )}
+          {/* for agent */}
           {role === "agent" && (
             <>
               <li>
@@ -92,11 +93,17 @@ const DashboardLayout = () => {
               </li>
             </>
           )}
+          {/* for user */}
           {role === "user" && (
             <>
               <li>
                 <Link to="/dashboard/cash-out" className="btn btn-outline">
                   Cash Out
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard/cash-in" className="btn btn-outline">
+                  Cash In
                 </Link>
               </li>
               <li>
@@ -109,7 +116,7 @@ const DashboardLayout = () => {
                   to="/dashboard/user-transactions"
                   className="btn btn-outline"
                 >
-                  User Transactions
+                  Transactions
                 </Link>
               </li>
             </>

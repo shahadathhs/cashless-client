@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "./../../provider/AuthProvider";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 export default function CashOut() {
   const [amount, setAmount] = useState("");
@@ -54,6 +55,11 @@ export default function CashOut() {
   };
 
   return (
+    <div>
+      <Helmet>
+        <title>Cash Out | Cashless</title>
+      </Helmet>
+    
     <div className="p-4 max-w-md mx-auto">
       <form
         onSubmit={handleCashOut}
@@ -88,6 +94,7 @@ export default function CashOut() {
           Cash Out
         </button>
       </form>
+    </div>
     </div>
   );
 }
