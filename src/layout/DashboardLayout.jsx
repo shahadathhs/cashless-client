@@ -24,12 +24,12 @@ const DashboardLayout = () => {
       <div className="drawer-content border-[1px] border-blue-500 shadow-md rounded-md m-2 p-2 min-h-[500px]">
         {/* Page content here */}
         <div className="w-full text-center my-2">
-          <button
+          <label
             htmlFor="my-drawer-2"
             className="btn btn-outline text-blue-600 drawer-button lg:hidden"
           >
             Open DashBoard
-          </button>
+          </label>
         </div>
         <Outlet />
       </div>
@@ -95,18 +95,12 @@ const DashboardLayout = () => {
           {role === "user" && (
             <>
               <li>
-                <Link
-                  to="/dashboard/cash-out"
-                  className="btn btn-outline"
-                >
+                <Link to="/dashboard/cash-out" className="btn btn-outline">
                   Cash Out
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/dashboard/send-money"
-                  className="btn btn-outline"
-                >
+                <Link to="/dashboard/send-money" className="btn btn-outline">
                   Send Money
                 </Link>
               </li>

@@ -13,6 +13,15 @@ export default function CashOut() {
   const handleCashOut = async (e) => {
     e.preventDefault();
 
+    if (amount < 50) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Cash-out Failed',
+        text: 'Minimum cash-out amount is 50 Taka.',
+      });
+      return;
+    }
+
     try {
       await axios.post(
         `${import.meta.env.VITE_API_URL}/cashout`,
