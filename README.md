@@ -47,8 +47,6 @@ To run this project locally, follow these steps:
    VITE_API_URL=https://cashless-server.vercel.app
    ```
 
-   Replace `https://cashless-server.vercel.app` with the URL of your backend server.
-
 4. **Run the application:**
 
    ```bash
@@ -56,6 +54,8 @@ To run this project locally, follow these steps:
    ```
 
    This command starts the development server. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+## Server side code repository: <https://github.com/shahadathhs/cashless-server>
 
 ## Usage
 
