@@ -34,7 +34,28 @@ export default function Register() {
         icon: "success",
         confirmButtonText: "Cool",
       });
-      navigate("/login");
+  
+      // Navigate first, then inject the tracking script.
+      navigate("/login", { replace: true });
+  
+      // Inject tracking script only if not already added
+      if (!document.querySelector('script[src*="gaf.js"]')) {
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = "https://d1c9wriao5k55q.cloudfront.net/assets/gaf.js?t=" + (864e5 * Math.ceil(new Date() / 864e5));
+        script.onload = () => {
+          window.gaf("init", "ed1ac1b8-1354-4fca-b69f-dca4b89bd170");
+          window.gaf("event", "pageload");
+          window.gaf("event", "signup", { email: user.email });
+        };
+        script.onerror = () => {
+          console.error("Tracking script failed to load.");
+        };
+        document.body.appendChild(script);
+      } else {
+        // If script exists, just log the signup event
+        window.gaf("event", "signup", { email: user.email });
+      }
     } catch (err) {
       console.error(err);
       Swal.fire({
@@ -44,7 +65,7 @@ export default function Register() {
         confirmButtonText: "Try Again",
       });
     }
-  };
+  }  
 
   return (
     <div className="min-h-screen-cal -pt-16 flex items-center justify-center">
