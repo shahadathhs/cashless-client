@@ -13,7 +13,7 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!/^\d{5}$/.test(pin)) {
       Swal.fire({
         title: "Error!",
@@ -34,28 +34,18 @@ export default function Register() {
         icon: "success",
         confirmButtonText: "Cool",
       });
-  
+
       // Navigate first, then inject the tracking script.
       navigate("/login", { replace: true });
-  
+
       // Inject tracking script only if not already added
-      if (!document.querySelector('script[src*="gaf.js"]')) {
-        const script = document.createElement("script");
-        script.async = true;
-        script.src = "https://d1c9wriao5k55q.cloudfront.net/assets/gaf.js?t=" + (864e5 * Math.ceil(new Date() / 864e5));
-        script.onload = () => {
-          window.gaf("init", "ed1ac1b8-1354-4fca-b69f-dca4b89bd170");
-          window.gaf("event", "pageload");
-          window.gaf("event", "signup", { email: user.email });
-        };
-        script.onerror = () => {
-          console.error("Tracking script failed to load.");
-        };
-        document.body.appendChild(script);
-      } else {
-        // If script exists, just log the signup event
-        window.gaf("event", "signup", { email: user.email });
-      }
+      // Directly use user.uid in the tracking script
+      const script = document.createElement("script");
+      script.innerHTML = `
+      !function(e,t,a,n,s,c){e.gaf||((n=e.gaf=function(){n.process?n.process.apply(n,arguments):n.queue.push(arguments)}).queue=[],n.t=+new Date,(s=t.createElement(a)).async=1,s.src="https://d1c9wriao5k55q.cloudfront.net/assets/gaf.js?t="+864e5*Math.ceil(new Date/864e5),(c=t.getElementsByTagName(a)[0]).parentNode.insertBefore(s,c))}(window,document,"script"),gaf("init","ed1ac1b8-1354-4fca-b69f-dca4b89bd170"),gaf("event","pageload");
+      gaf("event", "signup", { email: "${user.email}" });
+    `;
+      document.body.appendChild(script);
     } catch (err) {
       console.error(err);
       Swal.fire({
@@ -65,7 +55,7 @@ export default function Register() {
         confirmButtonText: "Try Again",
       });
     }
-  }  
+  };
 
   return (
     <div className="min-h-screen-cal -pt-16 flex items-center justify-center">
@@ -76,7 +66,7 @@ export default function Register() {
         <h2 className="text-center text-2xl font-bold">Create New Account</h2>
         <input
           required
-          className="input input-bordered w-full" 
+          className="input input-bordered w-full"
           type="text"
           placeholder="Name"
           value={name}
